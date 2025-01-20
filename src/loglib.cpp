@@ -55,8 +55,12 @@ void loglib::sendMessage(std::vector<uint8_t> message)
     }
 }
 
-void loglib::sendLog(string msg, logging::LOG_LEVEL logLevel)
+void loglib::sendLog(std::string msg, logging::LOG_LEVEL logLevel)
 {
+    if (name_.empty()){
+        std::cerr << "No logger is registered! Call registerLogger() first." << std::endl;
+        return;
+    }
     int nameLength = name_.length() + 1;
     int msgLength = msg.length() + 1;
     int messageSize = sizeof(int) * 4 + nameLength + msgLength;
@@ -77,7 +81,7 @@ void loglib::sendLog(string msg, logging::LOG_LEVEL logLevel)
     sendMessage(message);
 }
 
-bool loglib::fileExists(string path)
+bool loglib::fileExists(std::string path)
 {
     std::filesystem::directory_entry de {path};
     return de.exists();
@@ -93,13 +97,18 @@ void loglib::flushBuffer()
     }
 }
 
-void loglib::setName(string name)
+void loglib::setName(std::string name)
 {
     name_ = name;
 }
 
 void loglib::registerLogger(logging::LOGGER_TYPE loggerType)
 {
+    if (name_.empty()){
+        std::cerr << "No logger name is specified. Call setName() first!" << std::endl;
+        return;
+    }
+
     size_t messageSize = sizeof(int) * 3 + name_.length() + 1;
     std::vector<uint8_t> message(messageSize);
 
@@ -117,27 +126,27 @@ void loglib::registerLogger(logging::LOGGER_TYPE loggerType)
     sendMessage(message);
 }
 
-void loglib::info(string msg)
+void loglib::info(std::string msg)
 {
     sendLog(msg, logging::LOG_LEVEL::INFO);
 }
 
-void loglib::debug(string msg)
+void loglib::debug(std::string msg)
 {
     sendLog(msg, logging::LOG_LEVEL::DEBUG);
 }
 
-void loglib::warning(string msg)
+void loglib::warning(std::string msg)
 {
     sendLog(msg, logging::LOG_LEVEL::WARNING);
 }
 
-void loglib::error(string msg)
+void loglib::error(std::string msg)
 {
     sendLog(msg, logging::LOG_LEVEL::ERROR);
 }
 
-void loglib::fatal(string msg)
+void loglib::fatal(std::string msg)
 {
     sendLog(msg, logging::LOG_LEVEL::FATAL);
 }
