@@ -55,13 +55,13 @@ void loglib::sendMessage(std::vector<uint8_t> message)
     }
 }
 
-void loglib::sendLog(string msg, LOG_LEVEL logLevel)
+void loglib::sendLog(string msg, logging::LOG_LEVEL logLevel)
 {
     int nameLength = name_.length() + 1;
     int msgLength = msg.length() + 1;
     int messageSize = sizeof(int) * 4 + nameLength + msgLength;
     std::vector<uint8_t> message(messageSize);
-    REQUEST_TYPE rt = REQUEST_TYPE::LOG_MESSAGE;
+    logging::REQUEST_TYPE rt = logging::REQUEST_TYPE::LOG_MESSAGE;
     int current_offset = 0;
     memcpy(message.data(), &rt, sizeof(rt));
     current_offset += sizeof(rt);
@@ -98,12 +98,12 @@ void loglib::setName(string name)
     name_ = name;
 }
 
-void loglib::registerLogger(LOGGER_TYPE loggerType)
+void loglib::registerLogger(logging::LOGGER_TYPE loggerType)
 {
     size_t messageSize = sizeof(int) * 3 + name_.length() + 1;
     std::vector<uint8_t> message(messageSize);
 
-    REQUEST_TYPE rt = REQUEST_TYPE::NEW_LOGGER;
+    logging::REQUEST_TYPE rt = logging::REQUEST_TYPE::NEW_LOGGER;
     int nameLength = name_.length() + 1;
     int offset = 0;
     memcpy(message.data(), &rt, sizeof(rt));
@@ -119,25 +119,25 @@ void loglib::registerLogger(LOGGER_TYPE loggerType)
 
 void loglib::info(string msg)
 {
-    sendLog(msg, LOG_LEVEL::INFO);
+    sendLog(msg, logging::LOG_LEVEL::INFO);
 }
 
 void loglib::debug(string msg)
 {
-    sendLog(msg, LOG_LEVEL::DEBUG);
+    sendLog(msg, logging::LOG_LEVEL::DEBUG);
 }
 
 void loglib::warning(string msg)
 {
-    sendLog(msg, LOG_LEVEL::WARNING);
+    sendLog(msg, logging::LOG_LEVEL::WARNING);
 }
 
 void loglib::error(string msg)
 {
-    sendLog(msg, LOG_LEVEL::ERROR);
+    sendLog(msg, logging::LOG_LEVEL::ERROR);
 }
 
 void loglib::fatal(string msg)
 {
-    sendLog(msg, LOG_LEVEL::FATAL);
+    sendLog(msg, logging::LOG_LEVEL::FATAL);
 }
