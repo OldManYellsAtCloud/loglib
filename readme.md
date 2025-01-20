@@ -3,7 +3,7 @@ A small library to log using the `log` service.
 Usage:
 
 ```
-#include <loglib.h>
+#include <loglib/loglib.h>
 
 // ...
 
@@ -20,6 +20,17 @@ loglib::logger().registerLogger(LOGGER_TYPE::LOGGER_FILE);
 // start logging, anywhere.
 loglib::logger().debug("xxxxx don't segfault xxxx");
 loglib::logger().fatal("that's not good");
+
+// or use one of the macros (which is equivalent to the previous ones)
+LOG_DEBUG("xxxxx don't segfault xxxx");
+LOG_FATAL("that's not good");
+
+// or use one of the macros that format the output (_F postfix)
+LOG_DEBUG_F("this is a number: {}", 2);
+LOG_WARNING_F("I warned you not {}, but {}", "once", "twice");
+
+// or drop the LOG_ prefix
+FATAL_F("{} {}", "Femme", "Fatale");
 ```
 
 In case the logger service is not available when the library is used, it caches the

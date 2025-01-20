@@ -3,9 +3,36 @@
 #include <cstdint>
 #include <log/enums.h>
 #include <sys/un.h>
+#include <format>
 
 #define LOG_SOCKET "/tmp/log_sock"
 #define MAX_BUFFER_LENGTH 1024
+
+#define LOG_INFO(msg)      loglib::logger().info(msg)
+#define LOG_DEBUG(msg)   loglib::logger().debug(msg)
+#define LOG_WARNING(msg) loglib::logger().warning(msg)
+#define LOG_ERROR(msg)   loglib::logger().error(msg)
+#define LOG_FATAL(msg)   loglib::logger().fatal(msg)
+
+#define LOG_INFO_F(...)    LOG_INFO(std::format(__VA_ARGS__))
+#define LOG_DEBUG_F(...)    LOG_DEBUG(std::format(__VA_ARGS__))
+#define LOG_WARNING_F(...)  LOG_WARNING(std::format(__VA_ARGS__))
+#define LOG_ERROR_F(...)  LOG_ERROR(std::format(__VA_ARGS__))
+#define LOG_FATAL_F(...)  LOG_FATAL(std::format(__VA_ARGS__))
+
+#define INFO(msg)    LOG_INFO(msg)
+#define DEBUG(msg)   LOG_DEBUG(msg)
+#define DBG(msg)     LOG_DEBUG(msg)
+#define WARNING(msg) LOG_WARNING(msg)
+#define ERROR(msg)   LOG_ERROR(msg)
+#define FATAL(msg)   LOG_FATAL(msg)
+
+#define INFO_F(...)    LOG_INFO_F(__VA_ARGS__)
+#define DEBUG_F(...)   LOG_DEBUG_F(__VA_ARGS__)
+#define DBG_F(...)     LOG_DEBUG_F(__VA_ARGS__)
+#define WARNING_F(...) LOG_WARNING_F(__VA_ARGS__)
+#define ERROR_F(...)   LOG_ERROR_F(__VA_ARGS__)
+#define FATAL_F(...)   LOG_FATAL_F(__VA_ARGS__)
 
 using namespace std;
 
