@@ -25,6 +25,7 @@ private:
     int logsocket;
     std::string name_;
     sockaddr_un* sockaddr;
+    logging::LOG_LEVEL minLogLevel = logging::LOG_LEVEL::INFO;
 
     loglib();
 
@@ -41,6 +42,7 @@ public:
         return l;
     }
     void setName(std::string name);
+    void setMinLogLevel(logging::LOG_LEVEL logLevel);
     void registerLogger(logging::LOGGER_TYPE loggerType);
     loglib(const loglib&) = delete;
     void operator=(const loglib&) = delete;

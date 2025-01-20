@@ -102,6 +102,11 @@ void loglib::setName(std::string name)
     name_ = name;
 }
 
+void loglib::setMinLogLevel(logging::LOG_LEVEL logLevel)
+{
+    minLogLevel = logLevel;
+}
+
 void loglib::registerLogger(logging::LOGGER_TYPE loggerType)
 {
     if (name_.empty()){
@@ -128,21 +133,29 @@ void loglib::registerLogger(logging::LOGGER_TYPE loggerType)
 
 void loglib::info(std::string msg)
 {
+    if (minLogLevel > logging::LOG_LEVEL::INFO)
+        return;
     sendLog(msg, logging::LOG_LEVEL::INFO);
 }
 
 void loglib::debug(std::string msg)
 {
+    if (minLogLevel > logging::LOG_LEVEL::DEBUG)
+        return;
     sendLog(msg, logging::LOG_LEVEL::DEBUG);
 }
 
 void loglib::warning(std::string msg)
 {
+    if (minLogLevel > logging::LOG_LEVEL::WARNING)
+        return;
     sendLog(msg, logging::LOG_LEVEL::WARNING);
 }
 
 void loglib::error(std::string msg)
 {
+    if (minLogLevel > logging::LOG_LEVEL::ERROR)
+        return;
     sendLog(msg, logging::LOG_LEVEL::ERROR);
 }
 
