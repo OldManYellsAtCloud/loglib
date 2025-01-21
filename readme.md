@@ -29,8 +29,14 @@ LOG_FATAL("that's not good");
 LOG_DEBUG_F("this is a number: {}", 2);
 LOG_WARNING_F("I warned you not {}, but {}", "once", "twice");
 
-// or drop the LOG_ prefix
-FATAL_F("{} {}", "Femme", "Fatale");
+// it is also possible to register multiple names, if needed
+loglib::logger().registerLogger(LOGGER_TYPE::LOGGER_FILE, "name2");
+
+// use the macros having _N postfix (n = named) to use other than
+// the default name
+LOG_DEBUG_N("debug message from another section", "name2");
+LOG_DEBUG_NF("a {} debug message this time", "formatted", "name2");
+
 ```
 
 In case the logger service is not available when the library is used, it caches the
