@@ -14,6 +14,12 @@ loglib::loglib()
     };
 }
 
+/**
+ * @brief loglib::trySetupConnection
+ * Try connecting to the log socket, if it exists.
+ * This function may be called multiple times, if the first time it is
+ * not successful.
+ */
 void loglib::trySetupConnection()
 {
     int ret;
@@ -36,6 +42,15 @@ void loglib::trySetupConnection()
     ready = true;
 }
 
+
+/**
+ * @brief loglib::sendMessage
+ * Send a generic message to the log socket - generic in the sense that its
+ * content is not enforced, this is the last step of all communication, the
+ * function that actually fires off the composed message. The message supposed
+ * to be verified and assembled by the caller function.
+ * @param message
+ */
 void loglib::sendMessage(std::vector<uint8_t> message)
 {
     if (!ready){
@@ -55,6 +70,12 @@ void loglib::sendMessage(std::vector<uint8_t> message)
     }
 }
 
+/**
+ * @brief loglib::sendLog
+ * @param msg
+ * @param logLevel
+ * @param name
+ */
 void loglib::sendLog(std::string msg, logging::LOG_LEVEL logLevel, std::string name)
 {
     if (name.empty()){
@@ -135,7 +156,7 @@ void loglib::registerLogger(logging::LOGGER_TYPE loggerType)
 void loglib::registerLogger(logging::LOGGER_TYPE loggerType, std::string name)
 {
     if (name.empty()){
-        std::cerr << "No logger name is specified!" << std::endl;
+        std::cerr << "No logger name is specified! Specify it call setDefaultName() first." << std::endl;
         return;
     }
 

@@ -24,12 +24,12 @@ write_basic_package_version_file(
         VERSION 1.0
         COMPATIBILITY AnyNewerVersion)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/loglibConfig.cmake"
-        DESTINATION lib/cmake/loglib)
-
 include(GNUInstallDirs)
 install(TARGETS loglib
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/loglib
 )
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/loglibConfig.cmake"
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/loglib)
