@@ -7,11 +7,11 @@
 
 loglib::loglib()
 {
-    trySetupConnection();
     sockaddr = new sockaddr_un {
         .sun_family = AF_UNIX,
         .sun_path = LOG_SOCKET
     };
+    trySetupConnection();
 }
 
 /**
