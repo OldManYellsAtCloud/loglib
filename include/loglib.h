@@ -1,3 +1,6 @@
+#ifndef LOGLIB_INCLUDE_LOGLIB_H
+#define LOGLIB_INCLUDE_LOGLIB_H
+
 #include <string>
 #include <queue>
 #include <cstdint>
@@ -177,3 +180,4 @@ public:
      */
     void fatal(std::string msg, std::string name);
 };
+#endif
